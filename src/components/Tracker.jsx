@@ -1,23 +1,24 @@
 import React, { useState } from "react";
-import { useTheme } from "../context/ThemeContext"; // Import the useTheme hook
 
-const Tracker = () => {
-  const { darkMode, toggleDarkMode } = useTheme(); // Access darkMode and toggleDarkMode
+const Tracker = ({ darkMode }) => {
   const [expenses, setExpenses] = useState([]);
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
 
   const handleAddExpense = (e) => {
     e.preventDefault();
+
     if (!description || !amount) {
       alert("Please fill in all fields");
       return;
     }
+
     const newExpense = {
       id: Date.now(),
       description,
       amount: parseFloat(amount),
     };
+
     setExpenses([...expenses, newExpense]);
     setDescription("");
     setAmount("");
@@ -36,15 +37,6 @@ const Tracker = () => {
       }`}
     >
       <h1 className="text-3xl font-bold text-center mb-4">Expense Tracker</h1>
-
-      <button
-        onClick={toggleDarkMode} // Add button to toggle dark mode
-        className={`mb-4 py-2 px-4 rounded transition duration-300 ${
-          darkMode ? "bg-yellow-300 text-black" : "bg-gray-800 text-white"
-        }`}
-      >
-        {darkMode ? "Light Mode" : "Dark Mode"}
-      </button>
 
       <form onSubmit={handleAddExpense} className="mb-4">
         <div className="mb-2">
